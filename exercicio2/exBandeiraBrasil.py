@@ -2,9 +2,7 @@ from manim import *
 
 class BandeiraBrasil(Scene):
     def construct(self):
-        # -----------------------------
-        # TÍTULO
-        # -----------------------------
+
         titulo = Text(
             "Exercício da Bandeira do Brasil",
             font_size=40
@@ -13,9 +11,6 @@ class BandeiraBrasil(Scene):
         self.play(Write(titulo))
         self.wait(1)
 
-        # -----------------------------
-        # DADOS DO EXERCÍCIO
-        # -----------------------------
         dados = VGroup(
             MathTex(r"\text{Retângulo: } 2\,m \times 1{,}40\,m"),
             MathTex(r"\text{Distância do losango às bordas: } 17\,cm = 0{,}17\,m"),
@@ -28,9 +23,6 @@ class BandeiraBrasil(Scene):
         self.play(FadeIn(dados))
         self.wait(2)
 
-        # -----------------------------
-        # DESENHO DA BANDEIRA
-        # -----------------------------
         retangulo = Rectangle(
             width=6,
             height=4.2,
@@ -70,9 +62,7 @@ class BandeiraBrasil(Scene):
             bandeira.animate.next_to(titulo, DOWN, buff=0.15).to_edge(LEFT, buff=0.08)
         )
 
-        # =========================================================
-        # ITEM A
-        # =========================================================
+        #   Exercicio a)
         item_a = Text(
             "a) Área pintada de verde",
             font_size=34
@@ -154,9 +144,7 @@ class BandeiraBrasil(Scene):
         self.play(Write(grupo_verde))
         self.wait(3)
 
-        # =========================================================
-        # ITEM B
-        # =========================================================
+            # Exercicio b)
         self.play(
             FadeOut(
                 VGroup(

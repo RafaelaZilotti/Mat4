@@ -4,7 +4,6 @@ import math
 class DeducaoFormulaHeron(Scene):
     def construct(self):
 
-        # Título
         titulo = Text("Dedução da Fórmula de Heron", font_size=40)
         self.play(Write(titulo))
         self.wait(1)
