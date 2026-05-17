@@ -7,3 +7,5 @@
 a. Qual a área da região pintada de verde?
 
 b. qual é a porcentagem da área pintada de amarelo, em relação à área total da bandeira? Dê sua resposta com duas casas decimais depois da vírgula
+
+---
