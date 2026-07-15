@@ -8,10 +8,13 @@ class DeducaoTroncoPiramide(Scene):
         # TÍTULO
         # =======================================================
 
-        titulo = Title("Dedução da Fórmula do Volume do Tronco de Pirâmide")
+        titulo = Tex(
+            "Dedução da Fórmula do Tronco da Pirâmide"
+        ).scale(0.8).to_edge(UP, buff=0.7)
 
         self.play(Write(titulo))
         self.wait(1)
+        self.play(FadeOut(titulo))
 
         # =======================================================
         # DESENHO DA PIRÂMIDE
@@ -134,10 +137,11 @@ class DeducaoTroncoPiramide(Scene):
             MathTex(
                 r"k",
                 "=",
-                r"H-h"
+                r"H-h",
+                r"\quad\text{(altura do tronco)}"
             )
 
-        ).arrange(DOWN, aligned_edge=LEFT)
+        ).arrange(DOWN, buff=0.25).move_to(ORIGIN)
 
         self.play(Write(definicoes))
 
@@ -151,31 +155,31 @@ class DeducaoTroncoPiramide(Scene):
 
         titulo2 = Tex(
             "Semelhança de Pirâmides"
-        ).to_edge(UP)
-
-        self.play(
-            ReplacementTransform(titulo, titulo2)
         )
 
-        s1 = Tex(
-            "Razão entre alturas = razão entre lados correspondentes"
-        ).scale(0.75)
-
         s2 = MathTex(
-            r"\frac{h}{H}",
+            r"\frac{S_b}{S_B}",
             "=",
-            r"\frac{\sqrt{S_b}}{\sqrt{S_B}}"
-        ).next_to(s1, DOWN)
+            r"\left(\frac{h}{H}\right)^2"
+        )
 
         s3 = MathTex(
+            r"\frac{h}{H}",
+            "=",
+            r"\sqrt{\frac{S_b}{S_B}}",
+            "=",
+            r"\frac{\sqrt{S_b}}{\sqrt{S_B}}"
+        )
+
+        s4 = MathTex(
             r"h",
             "=",
             r"H\frac{\sqrt{S_b}}{\sqrt{S_B}}"
-        ).next_to(s2, DOWN)
+        )
 
-        self.play(Write(s1))
-        self.play(Write(s2))
-        self.play(Write(s3))
+        semelhanca_group = VGroup(titulo2, s2, s3, s4).arrange(DOWN, buff=0.25).move_to(UP * 0.05)
+
+        self.play(Write(semelhanca_group))
 
         self.wait(4)
 
@@ -184,14 +188,12 @@ class DeducaoTroncoPiramide(Scene):
         # =======================================================
 
         self.play(
-            FadeOut(s1),
-            FadeOut(s2),
-            FadeOut(s3)
+            FadeOut(semelhanca_group[1:])
         )
 
         titulo3 = Tex(
             "Volumes das Pirâmides"
-        ).to_edge(UP)
+        )
 
         self.play(
             ReplacementTransform(titulo2, titulo3)
@@ -207,17 +209,17 @@ class DeducaoTroncoPiramide(Scene):
             r"V_{\text{menor}}",
             "=",
             r"\frac13S_bh"
-        ).next_to(v1, DOWN)
+        )
 
         v3 = MathTex(
             r"V_{\text{tronco}}",
             "=",
             r"V_{\text{maior}}-V_{\text{menor}}"
-        ).next_to(v2, DOWN)
+        )
 
-        self.play(Write(v1))
-        self.play(Write(v2))
-        self.play(Write(v3))
+        volumes_group = VGroup(titulo3, v1, v2, v3).arrange(DOWN, buff=0.25).move_to(UP * 0.05)
+
+        self.play(Write(volumes_group[1:]))
 
         self.wait(4)
 
@@ -233,7 +235,7 @@ class DeducaoTroncoPiramide(Scene):
 
         titulo4 = Tex(
             "Substituindo a altura da pirâmide menor"
-        ).to_edge(UP)
+        )
 
         self.play(
             ReplacementTransform(titulo3, titulo4)
@@ -259,10 +261,11 @@ class DeducaoTroncoPiramide(Scene):
             "-",
             r"\frac{S_b^{3/2}}{\sqrt{S_B}}",
             r"\right)"
-        ).next_to(e1, DOWN)
+        )
 
-        self.play(Write(e1))
-        self.play(Write(e2))
+        substituicao_h_group = VGroup(titulo4, e1, e2).arrange(DOWN, buff=0.25).move_to(UP * 0.05)
+
+        self.play(Write(substituicao_h_group[1:]))
 
         self.wait(4)
 
@@ -277,7 +280,7 @@ class DeducaoTroncoPiramide(Scene):
 
         titulo5 = Tex(
             "Usando a relação  $k=H-h$"
-        ).to_edge(UP)
+        )
 
         self.play(
             ReplacementTransform(titulo4, titulo5)
@@ -296,10 +299,11 @@ class DeducaoTroncoPiramide(Scene):
             r"H",
             "=",
             r"\frac{k\sqrt{S_B}}{\sqrt{S_B}-\sqrt{S_b}}"
-        ).next_to(e3, DOWN)
+        )
 
-        self.play(Write(e3))
-        self.play(Write(e4))
+        eliminando_H_group = VGroup(titulo5, e3, e4).arrange(DOWN, buff=0.25).move_to(UP * 0.05)
+
+        self.play(Write(eliminando_H_group[1:]))
 
         self.wait(4)
 
@@ -314,7 +318,7 @@ class DeducaoTroncoPiramide(Scene):
 
         titulo6 = Tex(
             "Substituindo $H$ na expressão do volume"
-        ).to_edge(UP)
+        )
 
         self.play(
             ReplacementTransform(titulo5, titulo6)
@@ -328,20 +332,12 @@ class DeducaoTroncoPiramide(Scene):
             r"\frac{S_B^{3/2}-S_b^{3/2}}{\sqrt{S_B}-\sqrt{S_b}}"
         )
 
-        self.play(Write(r1))
-
-        self.wait(2)
-
         r2 = MathTex(
             r"S_B^{3/2}-S_b^{3/2}",
             "=",
             r"(\sqrt{S_B}-\sqrt{S_b})",
             r"(S_B+\sqrt{S_BS_b}+S_b)"
-        ).next_to(r1, DOWN)
-
-        self.play(Write(r2))
-
-        self.wait(3)
+        )
 
         r3 = MathTex(
             r"V",
@@ -350,9 +346,11 @@ class DeducaoTroncoPiramide(Scene):
             r"\left(",
             r"S_B+\sqrt{S_BS_b}+S_b",
             r"\right)"
-        ).next_to(r2, DOWN)
+        )
 
-        self.play(Write(r3))
+        substituicao_H_group = VGroup(titulo6, r1, r2, r3).arrange(DOWN, buff=0.25).move_to(UP * 0.05)
+
+        self.play(Write(substituicao_H_group[1:]))
 
         self.wait(3)
 
@@ -364,7 +362,11 @@ class DeducaoTroncoPiramide(Scene):
             r"\boxed{V_{\text{tronco}}=\frac{k}{3}\left(S_B+\sqrt{S_BS_b}+S_b\right)}"
         ).scale(1.25)
 
-        resultado.to_edge(DOWN)
+        conclusao = Tex(
+            "Fórmula do Volume do Tronco de Pirâmide"
+        ).scale(0.8)
+
+        final_group = VGroup(conclusao, resultado).arrange(DOWN, buff=0.3).move_to(ORIGIN)
 
         caixa = SurroundingRectangle(
             resultado,
@@ -372,21 +374,12 @@ class DeducaoTroncoPiramide(Scene):
             buff=0.2
         )
 
-        conclusao = Tex(
-            "Fórmula do Volume do Tronco de Pirâmide"
-        ).scale(0.8)
-
-        conclusao.next_to(resultado, UP)
-
         self.play(
-            FadeOut(r1),
-            FadeOut(r2),
-            FadeOut(r3),
+            FadeOut(substituicao_H_group),
             FadeOut(titulo6)
         )
 
-        self.play(Write(conclusao))
-        self.play(Write(resultado))
+        self.play(Write(final_group))
         self.play(Create(caixa))
 
         self.wait(5)

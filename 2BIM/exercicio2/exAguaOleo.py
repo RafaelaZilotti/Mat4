@@ -33,9 +33,9 @@ class Exercicio10(Scene):
         agua = Text("Água", font_size=30).move_to(DOWN*1)
         oleo = Text("Óleo", font_size=30).move_to(UP*1)
 
-        self.play(Create(cone))
-        self.play(Create(interface))
-        self.play(FadeIn(agua), FadeIn(oleo))
+        cone_group = VGroup(cone, interface, agua, oleo).to_edge(LEFT, buff=1.5)
+
+        self.play(Create(cone_group))
 
         self.wait(2)
 
@@ -46,7 +46,7 @@ class Exercicio10(Scene):
         info = MathTex(
             r"\text{Interface na metade da altura: }",
             r"\frac{h}{2}"
-        ).to_edge(RIGHT)
+        ).to_edge(RIGHT, buff=1.5).shift(UP*0.15)
 
         self.play(Write(info))
         self.wait(2)
@@ -57,9 +57,7 @@ class Exercicio10(Scene):
 
         self.play(FadeOut(info))
 
-        titulo2 = Tex("Volume da água").to_edge(UP)
-
-        self.play(ReplacementTransform(titulo, titulo2))
+        titulo2 = Tex("Volume da água").to_edge(UP, buff=0.7)
 
         eq1 = MathTex(
             r"r=\frac{R}{2}"
@@ -69,16 +67,17 @@ class Exercicio10(Scene):
             r"V_{agua}",
             "=",
             r"\frac13\pi\left(\frac R2\right)^2\left(\frac h2\right)"
-        ).next_to(eq1,DOWN)
+        )
 
         eq3 = MathTex(
             r"V_{agua}=",
             r"\frac1{24}\pi R^2h"
-        ).next_to(eq2,DOWN)
+        )
 
-        self.play(Write(eq1))
-        self.play(Write(eq2))
-        self.play(Write(eq3))
+        agua_group = VGroup(eq1, eq2, eq3).arrange(DOWN, buff=0.25).next_to(titulo2, DOWN, buff=0.35).shift(RIGHT*1.0)
+
+        self.play(ReplacementTransform(titulo, titulo2))
+        self.play(Write(agua_group))
 
         self.wait(3)
 
@@ -87,14 +86,10 @@ class Exercicio10(Scene):
         # ===========================
 
         self.play(
-            FadeOut(eq1),
-            FadeOut(eq2),
-            FadeOut(eq3)
+            FadeOut(agua_group)
         )
 
-        titulo3 = Tex("Volume do óleo").to_edge(UP)
-
-        self.play(ReplacementTransform(titulo2,titulo3))
+        titulo3 = Tex("Volume do óleo").to_edge(UP, buff=0.7)
 
         eq4 = MathTex(
             r"V_{cone}",
@@ -106,17 +101,18 @@ class Exercicio10(Scene):
             r"V_{oleo}",
             "=",
             r"\frac13\pi R^2h-\frac1{24}\pi R^2h"
-        ).next_to(eq4,DOWN)
+        )
 
         eq6 = MathTex(
             r"V_{oleo}",
             "=",
             r"\frac7{24}\pi R^2h"
-        ).next_to(eq5,DOWN)
+        )
 
-        self.play(Write(eq4))
-        self.play(Write(eq5))
-        self.play(Write(eq6))
+        oleo_group = VGroup(eq4, eq5, eq6).arrange(DOWN, buff=0.25).next_to(titulo3, DOWN, buff=0.35).shift(RIGHT*1.0)
+
+        self.play(ReplacementTransform(titulo2,titulo3),
+                  Write(oleo_group))
 
         self.wait(3)
 
@@ -125,12 +121,10 @@ class Exercicio10(Scene):
         # ===========================
 
         self.play(
-            FadeOut(eq4),
-            FadeOut(eq5),
-            FadeOut(eq6)
+            FadeOut(oleo_group)
         )
 
-        titulo4 = Tex("Após escoar toda a água").to_edge(UP)
+        titulo4 = Tex("Após escoar toda a água").to_edge(UP, buff=0.7)
         self.play(ReplacementTransform(titulo3,titulo4))
 
         eq7 = MathTex(
@@ -140,24 +134,23 @@ class Exercicio10(Scene):
 
         eq8 = MathTex(
             r"r=\frac{R}{h}x"
-        ).next_to(eq7,DOWN)
+        )
 
         eq9 = MathTex(
             r"V_{oleo}",
             "=",
             r"\frac13\pi\left(\frac{R}{h}x\right)^2x"
-        ).next_to(eq8,DOWN)
+        )
 
         eq10 = MathTex(
             r"V_{oleo}",
             "=",
             r"\frac13\pi R^2\frac{x^3}{h^2}"
-        ).next_to(eq9,DOWN)
+        )
 
-        self.play(Write(eq7))
-        self.play(Write(eq8))
-        self.play(Write(eq9))
-        self.play(Write(eq10))
+        escoar_group = VGroup(eq7, eq8, eq9, eq10).arrange(DOWN, buff=0.25).next_to(titulo4, DOWN, buff=0.35).shift(RIGHT*1.0)
+
+        self.play(Write(escoar_group))
 
         self.wait(3)
 
@@ -166,13 +159,10 @@ class Exercicio10(Scene):
         # ===========================
 
         self.play(
-            FadeOut(eq7),
-            FadeOut(eq8),
-            FadeOut(eq9),
-            FadeOut(eq10)
+            FadeOut(escoar_group)
         )
 
-        titulo5 = Tex("Igualando os volumes").to_edge(UP)
+        titulo5 = Tex("Igualando os volumes").to_edge(UP, buff=0.7)
 
         self.play(ReplacementTransform(titulo4,titulo5))
 
@@ -206,33 +196,25 @@ class Exercicio10(Scene):
             r"\frac{\sqrt[3]{7}}{2}h"
         ).next_to(e4,DOWN)
 
-        self.play(Write(e1))
-        self.wait()
+        igualando_group = VGroup(e1, e2, e3, e4, e5).arrange(DOWN, buff=0.18).next_to(titulo5, DOWN, buff=0.28).shift(RIGHT*1.2)
 
-        self.play(Write(e2))
-        self.wait()
-
-        self.play(Write(e3))
-        self.wait()
-
-        self.play(Write(e4))
-        self.wait()
-
-        self.play(Write(e5))
-
+        self.play(Write(igualando_group))
         self.wait(3)
 
         # ===========================
         # Resultado Final
         # ===========================
 
-        caixa = SurroundingRectangle(e5,color=YELLOW)
+        final_answer = MathTex(r"x = \frac{\sqrt[3]{7}}{2}h")
+        final_label = Tex("Resposta").scale(0.8)
+        final_group = VGroup(final_label, final_answer).arrange(DOWN, buff=0.3).move_to(ORIGIN)
+        caixa = SurroundingRectangle(final_answer, color=YELLOW, buff=0.3)
 
-        resultado = Tex(
-            "Resposta"
-        ).next_to(caixa,UP)
-
+        self.play(
+            FadeOut(igualando_group),
+            FadeOut(titulo5)
+        )
+        self.play(Write(final_group))
         self.play(Create(caixa))
-        self.play(Write(resultado))
 
         self.wait(4)
